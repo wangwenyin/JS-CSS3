@@ -1,0 +1,106 @@
+/*清除默认样式*/
+*{
+    margin: 0;
+    padding:0;
+}
+
+img{
+    width: 700px;
+    height: 400px;
+}
+
+div.frame{
+    width: 700px;
+    height: 400px;
+    margin: 50px auto 0;
+    border: 10px solid lightblue;
+    position: relative;
+    overflow: hidden;
+}
+ul.content{
+    list-style: none;
+    width: 4200px;
+    position: absolute;
+    left: 0;
+
+    animation: banner 15s linear infinite;
+    /*transition: 7s;*/
+}
+/*ul.content:hover{
+    left: -3500px;
+}*/
+@keyframes banner {
+    0%,10%{
+        left: 0;
+    }
+    20%,30%{
+        left: -700px;
+    }
+    40%,50%{
+        left: -1400px;
+    }
+    60%,70%{
+        left: -2100px;
+    }
+    80%,90%{
+        left: -2800px;
+    }
+    100%{
+        left: -3500px;
+    }
+}
+ul>li{
+    float: left;
+}
+
+#pointsDiv{
+    width: 140px;
+    height: 10px;
+    position: absolute;
+    z-index: 999; /*必须要脱离文档流，设置层级才有用*/
+    bottom: 20px;
+    left: 280px;
+}
+#pointsDiv span{
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: #333;
+    cursor: pointer;
+}
+#pointsDiv span.on{
+    background: lightblue;
+}
+
+.arrow {
+    cursor: pointer;
+    display: none;
+    line-height: 39px;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    z-index: 2;
+    top: 180px;
+    background-color: RGBA(0, 0, 0, 0.3);
+    color: #fff;
+    text-decoration: none;
+}
+
+.frame:hover .arrow{
+    display: block;
+}
+.arrow:hover{
+    background-color: RGBA(0, 0, 0, 0.7);
+
+}
+#prev{
+    left: 20px;
+}
+#next{
+    right: 20px;
+}
