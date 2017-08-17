@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*太极图主要通过border-radius属性实现圆，半圆，再通过定位来覆盖*/
+        body{
+            background: #eee;
+        }
+        .wrap{
+            width: 300px;
+            height: 300px;
+            /*border: 1px solid;*/
+            border-radius: 50%;
+            position: relative;
+            margin: 100px auto;
+            animation: spin 3s linear 3s infinite reverse running; /*动画设置*/
+        }
+        .div1{
+            width: 150px;
+            height: 300px;
+            border-radius: 150px 0 0 150px;
+            background: #000;
+        }
+        .div2{
+            width: 150px;
+            height: 300px;
+            border-radius: 0 150px 150px 0;
+            background: #fff;
+            margin-left: 150px;
+            margin-top: -300px;
+        }
+        .div1_small{
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #fff;
+            position: absolute;
+            bottom: 0;
+            right: 75px;
+            text-align: center;
+            line-height: 150px;
+        }
+        .div2_small{
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #000;
+            position: absolute;
+            top: 0;
+            left: 75px;
+            text-align: center;
+            line-height: 150px;
+        }
+        .div1_small span,.div2_small span{
+            display: inline-block;
+            vertical-align: middle;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+        }
+        .div1_small span{
+            background: #000;
+        }
+        .div2_small span{
+            background: #fff;
+        }
+
+        /*动画方法*/
+        @keyframes spin {
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="div1">
+        <div class="div1_small">
+            <span></span>
+        </div>
+    </div>
+    <div class="div2">
+        <div class="div2_small">
+            <span></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

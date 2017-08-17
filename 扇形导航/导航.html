@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            /*background: lightblue;*/
+        }
+        .home{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            background: url("img/home.png") no-repeat;
+            border-radius: 50%;
+            z-index: 1; /*HTML结构靠后的且设置了定位的元素会覆盖前面的元素，所有需提升层级*/
+            transition: 1s;
+        }
+        .list{
+            position: relative;
+            top: 4px;
+            left: 4px;
+            width: 42px;
+            height: 42px;
+        }
+        .list img{
+            position: absolute; /*把多张图片定位在一个位置*/
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="home"></div>
+    <div class="list">
+        <img src="img/clos.png"/>
+        <img src="img/full.png"/>
+        <img src="img/open.png"/>
+        <img src="img/prev.png"/>
+        <img src="img/refresh.png"/>
+    </div>
+</div>
+</body>
+<script>
+    window.onload = function () {
+        var home = document.querySelector('.home');
+        var listImg = document.querySelectorAll('.list img');
+        var r =150;
+
+        var flag = true;
+        home.onclick = function () {
+            if (flag) {
+                this.style.transform = 'rotate(-360deg)';
+
+                //图片弹出
+                for (var i=0;i< listImg.length;i++){
+                    //设置弹出后的位置
+                    //deg尽量用代码表示，即模拟出来（发现规律）
+                    listImg[i].style.left = -getPosition(r,(90/(listImg.length-1))*i).left + 'px';
+                    listImg[i].style.top = -getPosition(r,(90/(listImg.length-1))*i).top + 'px';
+
+                    listImg[i].style.transition = '0.5s ' + (i*0.1) + 's';
+                    listImg[i].style.transform = 'rotate(-720deg) scale(1)';
+                }
+            }else {
+                this.style.transform = 'rotate(0) scale(1)';
+
+                //图片收回
+                for (var i=0;i< listImg.length;i++){
+                    listImg[i].style.left = '0';
+                    listImg[i].style.top = '0';
+
+                    listImg[i].style.transform = 'rotate(0) scale(1)';
+                    listImg[i].style.transition = '0.4s ' + ((listImg.length-i-1)*0.1) + 's';
+                }
+            }
+            flag = !flag;
+        }
+
+        //取得弹出后的位置
+        function getPosition(r,deg) {
+            //Math.sin()里需传弧度：度数 * PI / 180 = 弧度
+            var left = r*Math.sin(deg*Math.PI/180);
+            var top = r*Math.cos(deg*Math.PI/180);
+
+            return {left:left,top:top} //可以返回一个对象，用对象.name取得里面的值
+        }
+
+        //点击每个图片
+        for (var i=0;i< listImg.length;i++){
+            //放大2倍
+            //透明度改变
+            //对于循环里的 多个点击事件 需用this指代当前的点击对象
+            // 如果单独的一个点击事件 可以不需要
+            listImg[i].onclick = function () {
+                this.style.transform = 'scale(2)';
+                this.style.opacity = '0.4';
+                this.style.transition = '0.5s';
+
+                //监测过度结束之后的状态
+                //不过要考虑移动端的 transitionEnd兼容 与 解绑
+                this.addEventListener('transitionEnd',fun);
+                //移动端低版本浏览器
+                this.addEventListener('webkitTransitionEnd',fun);
+
+                function fun() {
+                    this.style.transform = 'rotate(-720deg) scale(1)';// 1. 多加rotate是为了不把前面旋转的角度样式覆盖了  2. 单独想覆盖其中一个属性值是不生效的
+                    this.style.opacity = '1';
+                    this.style.transition = '0.2s';
+
+                    //移动端需要解绑 （性能考虑，省流量）
+                    this.removeEventListener('transitionEnd',fun);
+                    this.removeEventListener('webkitTransitionEnd',fun);
+                }
+
+            }
+        }
+    }
+</script>
+</html>

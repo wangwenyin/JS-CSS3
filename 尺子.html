@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #rule{
+            width: 780px;
+            height: 100px;
+            margin: 100px auto;
+            background-color: lightblue;
+            opacity: .7;
+            list-style: none;
+        }
+        #rule li{
+            float: left;
+            width: 2px;
+            height: 8px;
+            background-color: #000;
+            margin-right: 5px;
+            position: relative;
+        }
+        #rule li:nth-child(10n+6){
+            width: 3px;
+            height: 12px;
+        }
+        #rule li:nth-child(10n+1){
+            width: 4px;
+            height: 16px;
+            counter-increment: num;/*定义在那个选择器节点自增  默认从1开始*/
+        }
+        /*body{*/
+            /*counter-reset: num -1; 定义自增函数从-1开始自增*/
+        /*}*/
+        #rule li:nth-child(10n):before{
+            content: counter(num) '0';
+            position: absolute;
+            left: 0;
+            top: 20px;
+        }
+        #rule li:first-child:before{
+            content: '0';
+            position: absolute;
+            left: 0;
+            top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<ul id="rule"></ul>
+</body>
+<script>
+    var rule = document.getElementById('rule');
+    var num = 101;
+    var str ='';
+    for (var i=0;i< num;i++){
+        str +='<li></li>';
+    }
+    rule.innerHTML = str;
+</script>
+</html>

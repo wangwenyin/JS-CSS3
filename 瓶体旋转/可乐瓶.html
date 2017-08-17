@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #content{
+            position: relative;
+            margin: 100px auto;
+            overflow: hidden;
+        }
+        #wrapBg,#can{
+            position: absolute;
+        }
+        #wrapBg{
+            top: 10px;
+            left: 0;
+        }
+        #can{
+            top: 0;
+            left: 0;
+        }
+        #wrapBg img{
+            float: left;/* 解决图片之间的默认间距而不能一行排列问题*/
+        }
+
+    </style>
+</head>
+<body>
+<div id="content">
+    <div id="wrapBg">
+        <img src="img/coke_bg.jpg" alt="">
+        <img src="img/coke_bg.jpg" alt="">
+    </div>
+    <div id="can">
+        <img src="img/coke_can.png" alt="">
+    </div>
+</div>
+</body>
+<script>
+    window.onload = function () {
+        var content = document.getElementById('content');
+        var canImg = document.querySelector('#can>img');
+        var wrapBg = document.getElementById('wrapBg');
+        var wrapImg = document.querySelectorAll('#wrapBg>img')[0];
+        var wrapImgW = wrapImg.offsetWidth;
+/*wrapImg.width也可读取*/
+        var canImgW = canImg.offsetWidth;
+//        console.log(canImgW)
+        var canImgH = canImg.offsetHeight;
+
+        content.style.width = canImgW + 'px'; /*用js动态设置content宽度，便于以后换不同的图片*/
+        content.style.height = canImgH + 'px';
+        wrapBg.style.width = 2*wrapImgW + 'px';
+
+        var dis = 0;
+        setInterval(function () {
+            dis--;
+            if ( Math.abs(dis) >= wrapImgW ){
+                dis = 0
+            }
+            wrapBg.style.transform = 'translate('+ dis + 'px)';
+/*与变量进行拼串，变量不能被引号*/
+        },20)
+
+    }
+</script>
+</html>
